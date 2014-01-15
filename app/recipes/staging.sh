@@ -6,7 +6,7 @@ use nginx
 use phpfpm
 
 # shared ingredients (found in app/ingredients/common/[INGREDIENT].sh)
-# commom [INGREDIENT]
+# common [INGREDIENT]
 
 # Do some custom stuff, this is bash after all. We also make your configs available
 echo "Here's our webroot: $WEBROOT"
