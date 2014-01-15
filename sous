@@ -1,0 +1,36 @@
+#!/bin/bash
+
+SOUS_DIR=app
+PACKAGE=$SOUS_DIR.tar.gz
+
+source ./$SOUS_DIR/utensils/stage.sh
+source ./$SOUS_DIR/config/$STAGE.sh
+source ./$SOUS_DIR/utensils/os.sh
+
+if [[ -z "$OS" ]]; then
+	echo "Please make an OS selection by setting the OS variable, e.g. OS=ubuntu in $SOUS_DIR/config/$STAGE.sh"
+    exit
+fi
+
+if [ ! -d ./$SOUS_DIR/ingredients/$OS ]; then
+    echo "Your missing a vital directoy: ./$SOUS_DIR/ingredients/$OS"
+    exit
+fi
+
+if [ ! -f ./$SOUS_DIR/config/$STAGE.sh ]; then
+    echo "Please create the following config file: ./$SOUS_DIR/config/$STAGE.sh"
+    exit
+fi
+
+if [ ! -f ./$SOUS_DIR/recipes/$STAGE.sh ]; then
+    echo "Please create the following recipe file: ./$SOUS_DIR/recipes/$STAGE.sh"
+    exit
+fi
+
+source ./$SOUS_DIR/utensils/bundle.sh
+
+echo "Uploading package to the server"
+scp -i $KEY $PACKAGE root@$HOST:/root/
+
+echo "Unpacking package on the server"
+ssh -i $KEY root@$HOST "cd /root/ && tar -xzvf $PACKAGE && cd $SOUS_DIR && ./utensils/run.sh $STAGE"
