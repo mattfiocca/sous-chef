@@ -5,6 +5,10 @@ A simple server deployment system with ssh, bash, tar, and a linux server as the
 
 The assumption is made that you have root ssh access to the server(s) you want to deploy to, and using public key authentication.
 
+**PLEASE NOTE**
+
+This tool is currently being re-worked to manage re-deployments on existing setups. Please only run to configure your server for the first time. Hopefully I can get to this fairly quickly.
+
 ## Stages
 
 We call deployments 'stages'. This might be a term like `production` or `staging`.
